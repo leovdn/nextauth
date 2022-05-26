@@ -4,6 +4,7 @@ import { AuthContext } from "../contexts/AuthContext"
 import { parseCookies } from "nookies"
 
 import styles from "../styles/Home.module.css"
+import { WithSSRGuest } from "../utils/withSSRGuest"
 
 const Home: NextPage = () => {
   const [email, setEmail] = useState("")
@@ -45,19 +46,8 @@ const Home: NextPage = () => {
 
 export default Home
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const cookies = parseCookies(ctx)
-
-  if (!cookies["nextath.token"]) {
-    return {
-      redirect: {
-        destination: "/dashboard",
-        permanent: false,
-      },
-    }
-  }
-
+export const getServerSideProps = WithSSRGuest(async (ctx) => {
   return {
     props: {},
   }
-}
+})
