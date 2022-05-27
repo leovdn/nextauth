@@ -5,16 +5,16 @@ import {
 } from "next"
 import { parseCookies } from "nookies"
 
-export function WithSSRGuest<P>(fn: GetServerSideProps<P>) {
+export function WithSSRAuth<P>(fn: GetServerSideProps<P>) {
   return async (
     ctx: GetServerSidePropsContext
   ): Promise<GetServerSidePropsResult<P>> => {
     const cookies = parseCookies(ctx)
 
-    if (cookies["nextauth.token"]) {
+    if (!cookies["nextauth.token"]) {
       return {
         redirect: {
-          destination: "/dashboard",
+          destination: "/",
           permanent: false,
         },
       }
