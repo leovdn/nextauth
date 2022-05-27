@@ -8,7 +8,7 @@ export default function Dashboard() {
   const { user } = useContext(AuthContext)
 
   useEffect(() => {
-    api.get("me").then((response) => console.log(response))
+    api.get("/me").then((response) => console.log(response))
     // .catch((error) => console.log(error))
   }, [])
 
@@ -19,7 +19,7 @@ export const getServerSideProps = WithSSRAuth(async (ctx) => {
   const apiClient = setupApiClient(ctx)
   const response = await apiClient.get("me")
 
-  console.log(response.data)
+  console.log(response)
 
   return {
     props: {},
